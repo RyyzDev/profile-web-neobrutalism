@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pengalaman Saya</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            base: 'var(--bg)',
+            ink: 'var(--ink)',
+            muted: 'var(--muted)',
+            accent: 'var(--accent)',
+            amber: 'var(--amber)',
+          },
+          fontFamily: { display: ['Space Grotesk', 'sans-serif'], body: ['IBM Plex Sans', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+
+<body class="font-body bg-base text-ink min-h-screen">
+
+  <main class="max-w-5xl mx-auto px-6 py-14">
+    <!-- Tombol Switch Dark/Light Mode -->
+    <div class="flex justify-end mb-4">
+      <button id="theme-toggle" type="button" aria-label="Ubah Tema"
+        class="neu-icon-btn w-11 h-11 flex items-center justify-center shrink-0 text-ink">
+        <!-- Ikon Bulan -->
+        <svg id="theme-toggle-dark-icon" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+        </svg>
+        <!-- Ikon Matahari -->
+        <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="1.7"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 3v2.25m0 13.5V21m8.966-8.966h-2.25m-13.5 0H3m15.364 6.364l-1.591-1.591M6.758 6.758L5.167 5.167m12.728 0l-1.591 1.591M6.758 17.242l-1.591 1.591M12 18a6 6 0 100-12 6 6 0 000 12z" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Header Navigasi -->
+    <div class="flex items-center justify-between mb-16">
+      <div class="flex items-center gap-5">
+        <a href="index.html" title="Kembali ke beranda"
+          class="w-12 h-12 flex items-center justify-center shrink-0 border-2 border-black bg-white shadow-[4px_4px_0_0] shadow-black hover:bg-yellow-200 focus:outline-0 dark:bg-[#14171e] dark:border-[#282d3c] dark:text-[#e6eaf0] dark:shadow-[#000000]">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5"></path>
+            <path d="M12 19l-7-7 7-7"></path>
+          </svg>
+        </a>
+        <div>
+          <h1 class="font-display text-2xl md:text-3xl font-bold dark:text-white">Pengalaman & Organisasi</h1>
+          <p class="text-black/70 dark:text-gray-400 text-sm mt-1 font-medium">Perjalanan karier, dan
+            latar belakang pendidikan.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Container Timeline -->
+    <div class="relative w-full mx-auto">
+
+      <!-- Garis Vertikal Tengah (Desktop) / Kiri (Mobile) -->
+      <div class="absolute left-[24px] md:left-1/2 top-0 bottom-0 w-1 bg-black dark:bg-[#282d3c] -translate-x-1/2">
+      </div>
+      <!-- ITEM 1: Kiri (Desktop) / Kanan (Mobile) -->
+      <div class="relative flex md:justify-start justify-end w-full mb-12">
+        <!-- Dot -->
+        <div
+          class="absolute left-[24px] md:left-1/2 top-5 w-6 h-6 rounded-full bg-yellow-300 border-[3px] border-black z-10 -translate-x-1/2 dark:border-[#282d3c] dark:bg-yellow-600">
+        </div>
+        <!-- Card -->
+        <div class="w-full pl-[60px] md:pl-0 md:w-1/2 md:pr-12">
+          <article
+            class="border-2 border-black bg-white p-6 shadow-[6px_6px_0_0] shadow-black dark:bg-[#14171e] dark:border-[#282d3c] dark:shadow-[#000000]">
+            <div class="flex flex-col md:items-end md:text-right text-left mb-4">
+              <span
+                class="inline-block border-2 border-black bg-yellow-200 px-3 py-1 text-xs font-bold text-black shadow-[2px_2px_0_0] shadow-black mb-3 dark:border-[#282d3c] dark:shadow-[#000000] self-start md:self-end">Hingga
+                Sekarang</span>
+              <h2 class="font-display font-bold text-xl dark:text-white">Mahasiswa S1 Sistem Informasi</h2>
+              <h3 class="font-semibold text-md mt-1 dark:text-gray-300">Universitas Jaya Merdeka 1</h3>
+            </div>
+            <p class="text-sm leading-relaxed text-black dark:text-gray-400 md:text-right text-left">
+              Fokus pada eksplorasi ekosistem aplikasi modern dan pemecahan masalah arsitektur. Aktif
+              mempersiapkan diri mewakili kampus dalam berbagai kompetisi.
+            </p>
+          </article>
+        </div>
+      </div>
+
+      <!-- ITEM 2: Kanan (Desktop & Mobile) -->
+      <div class="relative flex md:justify-end justify-end w-full mb-12">
+        <!-- Dot -->
+        <div
+          class="absolute left-[24px] md:left-1/2 top-5 w-6 h-6 rounded-full bg-red-300 border-[3px] border-black z-10 -translate-x-1/2 dark:border-[#282d3c] dark:bg-red-600">
+        </div>
+        <!-- Card -->
+        <div class="w-full pl-[60px] md:pl-12 md:w-1/2">
+          <article
+            class="border-2 border-black bg-white p-6 shadow-[6px_6px_0_0] shadow-black dark:bg-[#14171e] dark:border-[#282d3c] dark:shadow-[#000000]">
+            <div class="flex flex-col text-left mb-4">
+              <span
+                class="inline-block border-2 border-black bg-red-200 px-3 py-1 text-xs font-bold text-black shadow-[2px_2px_0_0] shadow-black mb-3 dark:border-[#282d3c] dark:shadow-[#000000] self-start">Alumni</span>
+              <h2 class="font-display font-bold text-xl dark:text-white">Rekayasa Perangkat Lunak</h2>
+              <h3 class="font-semibold text-md mt-1 dark:text-gray-300">SMK Jaya Merdeka 5</h3>
+            </div>
+            <p class="text-sm leading-relaxed text-black dark:text-gray-400 text-left">
+              Mempelajari fondasi infrastruktur software, administrasi linux, dan troubleshooting perangkat lunak yang
+              menjadi dasar kuat untuk karir di bidang pemrograman.
+            </p>
+          </article>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="./assets/main.js"></script>
+</body>
+
+</html>

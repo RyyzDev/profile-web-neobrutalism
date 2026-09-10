@@ -1,0 +1,211 @@
+/* =========================================================
+   NEUMORPHISM DESIGN SYSTEM
+   ========================================================= */
+
+:root {
+  --bg: #e6eaf0;
+  --shadow-light: #ffffff;
+  --shadow-dark: #b6c0d1;
+  --ink: #2b3245;
+  --muted: #6c7686;
+  --accent: #46508a;
+  --accent-dark: #363e6c;
+  --amber: #b3792f;
+  --line: #d4dbe6;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* Mode Gelap (Dark Mode Override) */
+body.dark {
+  --bg: #1e222d;
+  --shadow-light: #282d3c;
+  --shadow-dark: #14171e;
+  --ink: #e6eaf0;
+  --muted: #94a3b8;
+  --line: #2d3446;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ---------- Permukaan dasar ---------- */
+
+.neu-raised {
+  background: var(--bg);
+  border-radius: 24px;
+  box-shadow: 9px 9px 18px var(--shadow-dark), -9px -9px 18px var(--shadow-light);
+}
+
+.neu-raised-sm {
+  background: var(--bg);
+  border-radius: 16px;
+  box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+}
+
+.neu-inset {
+  background: var(--bg);
+  border-radius: 16px;
+  box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
+}
+
+.neu-inset-sm {
+  background: var(--bg);
+  border-radius: 12px;
+  box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+}
+
+/* ---------- Tombol ---------- */
+
+.neu-btn {
+  background: var(--bg);
+  border-radius: 14px;
+  box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.neu-btn:hover {
+  box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+}
+
+.neu-btn:active {
+  box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+  transform: translateY(1px);
+}
+
+.neu-icon-btn {
+  background: var(--bg);
+  border-radius: 999px;
+  box-shadow: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.neu-icon-btn:hover {
+  box-shadow: 3px 3px 6px var(--shadow-dark), -3px -3px 6px var(--shadow-light);
+}
+
+.neu-icon-btn:active {
+  box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+  transform: translateY(1px);
+}
+
+.neu-btn-accent {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 14px;
+  box-shadow: 5px 5px 12px rgba(54, 62, 108, 0.35);
+  transition: box-shadow 0.15s ease, transform 0.15s ease, background 0.15s ease;
+}
+
+.neu-btn-accent:hover {
+  background: var(--accent-dark);
+}
+
+.neu-btn-accent:active {
+  box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.35);
+  transform: translateY(1px);
+}
+
+/* ---------- Form ---------- */
+
+.neu-input {
+  background: var(--bg);
+  border: none;
+  border-radius: 12px;
+  box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+  color: var(--ink);
+}
+
+.neu-input::placeholder {
+  color: var(--muted);
+}
+
+.neu-input:focus {
+  box-shadow: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light), 0 0 0 2px var(--accent);
+  outline: none;
+}
+
+/* ---------- Chip / tag ---------- */
+
+.neu-chip {
+  background: var(--bg);
+  border-radius: 999px;
+  box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+  color: var(--ink);
+}
+
+/* ---------- Sidebar (admin) ---------- */
+
+.sidebar-link {
+  color: var(--muted);
+  border-radius: 14px;
+  transition: box-shadow 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-link:hover {
+  box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+  color: var(--ink);
+}
+
+.sidebar-link.active {
+  box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ---------- Garis waktu sertifikasi ---------- */
+
+.timeline-dot {
+  background: var(--bg);
+  box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+}
+
+.timeline-line {
+  background: var(--line);
+}
+
+/* ---------- Responsif: sidebar mobile ---------- */
+
+@media (max-width: 900px) {
+  #sidebar {
+    position: fixed;
+    inset: 0 25% 0 0;
+    z-index: 40;
+    transform: translateX(-105%);
+    transition: transform 0.25s ease;
+  }
+  #sidebar.open {
+    transform: translateX(0);
+  }
+  #sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 24, 36, 0.35);
+    z-index: 30;
+  }
+  #sidebar-overlay.open {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

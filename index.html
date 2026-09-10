@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Disini Judul Website Kamu</title>
+  <link rel="icon" href="assets/icons/favicon.png" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            base: 'var(--bg)',
+            ink: 'var(--ink)',
+            muted: 'var(--muted)',
+            accent: 'var(--accent)',
+            amber: 'var(--amber)',
+          },
+          fontFamily: {
+            display: ['Space Grotesk', 'sans-serif'],
+            body: ['IBM Plex Sans', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+
+<body class="font-body bg-base text-ink min-h-screen">
+  <main class="max-w-5xl mx-auto px-6 py-16 md:py-24">
+    <!-- Tombol Switch Dark/Light Mode -->
+    <div class="flex justify-end mb-4">
+      <button id="theme-toggle" type="button" aria-label="Ubah Tema"
+        class="neu-icon-btn w-11 h-11 flex items-center justify-center shrink-0 text-ink">
+        <!-- Ikon Bulan -->
+        <svg id="theme-toggle-dark-icon" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+        </svg>
+        <!-- Ikon Matahari -->
+        <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="1.7"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 3v2.25m0 13.5V21m8.966-8.966h-2.25m-13.5 0H3m15.364 6.364l-1.591-1.591M6.758 6.758L5.167 5.167m12.728 0l-1.591 1.591M6.758 17.242l-1.591 1.591M12 18a6 6 0 100-12 6 6 0 000 12z" />
+        </svg>
+      </button>
+    </div>
+    <section class="grid md:grid-cols-[220px_1fr] gap-10 md:gap-14 items-center">
+      <!-- Foto profil -->
+      <div
+        class="neu-raised p-3 w-fit mx-auto md border-2 border-black bg-white px-5 py-3 font-semibold text-black shadow-[4px_4px_0_0] shadow-black focus:ring-2 focus:ring-yellow-300 focus:outline-0 mx-0">
+        <img src="https://api.dicebear.com/7.x/notionists/svg?seed=John&backgroundColor=e6eaf0"
+          alt="Foto profil kamu disini" class="neu-inset w-40 h-40 md:w-48 md:h-48 rounded-[20px] object-cover p-1" />
+      </div>
+
+      <!-- Deskripsi -->
+      <div class="text-center md:text-left">
+        <h1 class="mb-5 font-display text-4xl md:text-5xl font-semibold tracking-tight">Nama Kamu Disini</h1>
+        <span
+          class="mt-2 border-2 border-black bg-blue-100 px-3 py-1.5 text-sm/none font-semibold text-black shadow-[2px_2px_0_0] shadow-black">
+          Personal Branding &amp; Tagline Kamu Disini
+        </span>
+        <p class="mt-5 text-md text-black leading-relaxed dark:text-white mx-auto">
+          Disini bisa kamu tambahkan deskripsi, seperti pendidikan, proyek yang sedang dilakukan/dibuat,
+          pengalaman kompetisi, dan lain-lain. ketertarikan kamu juga boleh di sini.
+        </p>
+        <!-- Sosial Media Icons -->
+        <div class="mt-6 mb-4 flex items-center justify-center md:justify-start gap-4 text-black dark:text-white">
+
+          <!-- Email -->
+          <a href="mailto:emailmu@domain.com" title="Email" class="hover:opacity-75 transition-opacity p-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+            </svg>
+          </a>
+
+          <!-- X / Twitter -->
+          <a href="https://x.com/username" target="_blank" rel="noopener noreferrer" title="X (Twitter)"
+            class="hover:opacity-75 transition-opacity p-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+          </a>
+
+          <!-- Instagram -->
+          <a href="https://instagram.com/username" target="_blank" rel="noopener noreferrer" title="Instagram"
+            class="hover:opacity-75 transition-opacity p-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8"
+              viewBox="0 0 24 24">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+
+          <!-- GitHub -->
+          <a href="https://github.com/username" target="_blank" rel="noopener noreferrer" title="GitHub"
+            class="hover:opacity-75 transition-opacity p-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8"
+              viewBox="0 0 24 24">
+              <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+              </path>
+            </svg>
+          </a>
+
+        </div>
+        <!-- Tombol Utama -->
+        <div class="mt-7 flex flex-wrap gap-3 justify-center md:justify-start">
+          <a class="border-2 border-black bg-white px-5 py-3 font-semibold text-black shadow-[4px_4px_0_0] shadow-black hover:bg-yellow-200 focus:ring-2 focus:ring-yellow-300 focus:outline-0"
+            href="experience.html">
+            Pengalaman Saya
+          </a>
+          <a class="border-2 border-black bg-white px-5 py-3 font-semibold text-black shadow-[4px_4px_0_0] shadow-black hover:bg-yellow-200 focus:ring-2 focus:ring-yellow-300 focus:outline-0"
+            href="portfolio.html">
+            Portofolio Saya
+          </a>
+          <a class="border-2 border-black bg-white px-5 py-3 font-semibold text-black shadow-[4px_4px_0_0] shadow-black hover:bg-yellow-200 focus:ring-2 focus:ring-yellow-300 focus:outline-0"
+            href="certification.html">
+            Lihat Sertifikasi
+          </a>
+        </div>
+      </div>
+      </label>
+    </section>
+
+    <!-- Keahlian -->
+    <section class="mt-20">
+      <h2 class="font-display text-xl font-semibold">Keahlian</h2>
+      <p class="text-ink mt-1 mb-6 max-w-lg">Beberapa tools dan teknologi yang paling sering dipakai sehari-hari.</p>
+      <div class="flex flex-wrap gap-3">
+        <span
+          class="inline-flex flex-row items-center gap-2 px-4 py-2 text-sm border-2 border-black bg-white font-semibold text-black focus:ring-2 focus:ring-yellow-300 focus:outline-0 dark:bg-[#14171e] dark:border-[#282d3c] dark:text-white">
+          <img src="assets/icons/laravel.png" alt="Laravel" class="w-5 h-5 object-contain shrink-0" />
+          <span>Laravel</span>
+        </span>
+      </div>
+    </section>
+
+    <!-- QnA  -->
+    <section class="mt-16 grid sm:grid-cols-1 gap-5">
+      <div class="space-y-3">
+        <details
+          class="group border-2 border-ink shadow-[4px_4px_0_0] shadow-ink  [&_summary::-webkit-details-marker]:hidden">
+          <summary
+            class="flex cursor-pointer items-center justify-between gap-4 bg-white px-4 py-3 font-medium text-gray-900 dark:bg-[#14171e] dark:text-[#e6eaf0] hover:bg-yellow-200 focus:bg-yellow-200 focus:outline-0">
+            <span class="font-semibold">Sehari butuh berapa gelas kopi kalo lagi ngoding?</span>
+
+            <svg aria-hidden="true" class="size-5 shrink-0 group-open:-rotate-180" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+
+          <div class="border-t-2 border-ink p-4">
+            <p class="text-ink">
+              mungkin 4-6 gelas kopi tanpa gula :)
+            </p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Akses admin -->
+  <a id="admin-trigger" href="login.html" title="Masuk sebagai admin"
+    class="neu-icon-btn hidden fixed bottom-6 right-6 w-12 h-12 flex items-center justify-center text-muted">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="10" width="16" height="10" rx="2"></rect>
+      <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+    </svg>
+  </a>
+  <!-- Jejak  -->
+  <div class="fixed bottom-4 left-4 z-50 pointer-events-none">
+    <a href="https://github.com/RyyzDev" target="_blank" rel="noopener"
+      class="pointer-events-auto inline-flex items-center gap-2 border-2 border-black bg-white dark:bg-[#14171e] dark:border-[#282d3c] px-3 py-1.5 text-xs font-mono font-bold text-black dark:text-white shadow-[3px_3px_0_0] shadow-black dark:shadow-[#000000] hover:-translate-y-0.5 hover:bg-yellow-300 dark:hover:bg-yellow-500 hover:text-black transition-all">
+      <span class="w-1.5 h-1.5 bg-green-500 border border-black rounded-full"></span>
+      Made carefully by <span class="font-display">RyyzDev x Gemini</span>
+    </a>
+  </div>
+</body>
+<script src="assets/main.js"></script>
+
+</html>
