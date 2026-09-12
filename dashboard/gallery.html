@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kelola Galeri — Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        base: 'var(--bg)',
+                        ink: 'var(--ink)',
+                        muted: 'var(--muted)',
+                        accent: 'var(--accent)',
+                        amber: 'var(--amber)',
+                    },
+                    fontFamily: { display: ['Space Grotesk', 'sans-serif'], body: ['IBM Plex Sans', 'sans-serif'] },
+                },
+            },
+        };
+    </script>
+    <link rel="stylesheet" href="../assets/style.css" />
+</head>
+
+<!-- MODAL TAMBAH / EDIT GALERI -->
+<div id="gallery-modal"
+    class="fixed inset-0 z-50 hidden flex justify-center items-center p-4 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300 overflow-y-auto">
+
+    <!-- Kotak Modal (neo-modal-content) -->
+    <div class="neo-modal-content relative w-full max-w-xl border-2 border-black bg-white p-6 md:p-8 shadow-[8px_8px_0_0] shadow-black dark:bg-[#14171e] dark:border-[#282d3c] dark:shadow-[#000000] transform scale-95 transition-transform duration-300 my-auto"
+        id="gallery-modal-content">
+
+        <!-- Tombol Tutup (X) -->
+        <button type="button"
+            class="close-modal-btn absolute top-4 right-4 z-50 w-10 h-10 flex items-center justify-center border-2 border-black bg-red-300 hover:bg-red-400 shadow-[2px_2px_0_0] shadow-black transition-all active:translate-y-[1px] active:shadow-none dark:bg-red-600 dark:border-[#282d3c] dark:text-white dark:shadow-[#000000]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 pointer-events-none" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <path d="M18 6L6 18M6 6l12 12"></path>
+            </svg>
+        </button>
+
+        <h2 class="font-display text-2xl font-bold mb-6 dark:text-white" id="gallery-modal-title">Tambah Foto Galeri
+        </h2>
+
+        <!-- Form -->
+        <form action="#" method="POST"
+            onsubmit="event.preventDefault(); window.galleryModal.close(); alert('Foto galeri berhasil disimpan!');">
+
+            <!-- Upload Gambar Galeri (Ratio 4:3) -->
+            <div class="mb-5">
+                <label class="block font-bold text-sm text-black mb-2 dark:text-white">Foto Dokumentasi</label>
+                <div class="flex flex-col sm:flex-row items-center gap-4">
+                    <div
+                        class="w-32 h-24 shrink-0 border-2 border-black bg-gray-100 overflow-hidden shadow-[4px_4px_0_0] shadow-black dark:border-[#282d3c] dark:bg-gray-800 dark:shadow-[#000000]">
+                        <img id="gallery-image-preview" src="https://placehold.co/600x450/e2e8f0/1e293b?text=Upload"
+                            alt="Preview" class="w-full h-full object-cover" />
+                    </div>
+                    <div class="relative w-full">
+                        <input type="file" id="gallery-image-upload" accept="image/*"
+                            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                        <div
+                            class="flex items-center justify-center w-full border-2 border-dashed border-black bg-cyan-100/50 p-4 text-sm font-bold text-black pointer-events-none dark:border-[#282d3c] dark:bg-[#1e222d] dark:text-gray-300">
+                            Pilih / seret foto ke sini
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Judul -->
+            <div class="mb-5">
+                <label for="judul_foto" class="block font-bold text-sm text-black mb-2 dark:text-white">Judul Foto /
+                    Acara</label>
+                <input type="text" id="judul_foto" placeholder="Contoh: Ricing Arch Linux" required
+                    class="w-full border-2 border-black bg-white px-4 py-3 font-medium text-black focus:outline-none focus:ring-0 focus:bg-yellow-50 shadow-[4px_4px_0_0] shadow-black transition-colors dark:bg-[#1e222d] dark:border-[#282d3c] dark:text-white dark:shadow-[#000000] dark:focus:bg-[#2a3040]" />
+            </div>
+
+            <!-- Input Deskripsi -->
+            <div class="mb-5">
+                <label for="deskripsi_foto" class="block font-bold text-sm text-black mb-2 dark:text-white">Deskripsi
+                    Singkat</label>
+                <textarea id="deskripsi_foto" rows="3" placeholder="Cerita singkat di balik foto ini..." required
+                    class="w-full resize-y border-2 border-black bg-white p-4 font-medium text-black leading-relaxed focus:outline-none focus:ring-0 focus:bg-yellow-50 shadow-[4px_4px_0_0] shadow-black transition-colors dark:bg-[#1e222d] dark:border-[#282d3c] dark:text-white dark:shadow-[#000000] dark:focus:bg-[#2a3040]"></textarea>
+            </div>
+
+            <!-- Grid Kategori & Tahun -->
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <div>
+                    <label for="kategori_foto"
+                        class="block font-bold text-sm text-black mb-2 dark:text-white">Kategori</label>
+                    <input type="text" id="kategori_foto" placeholder="Hardware, Event, Setup..." required
+                        class="w-full border-2 border-black bg-white px-4 py-3 font-medium text-black focus:outline-none focus:ring-0 focus:bg-yellow-50 shadow-[4px_4px_0_0] shadow-black transition-colors dark:bg-[#1e222d] dark:border-[#282d3c] dark:text-white dark:shadow-[#000000] dark:focus:bg-[#2a3040]" />
+                </div>
+                <div>
+                    <label for="tahun_foto"
+                        class="block font-bold text-sm text-black mb-2 dark:text-white">Tahun</label>
+                    <input type="number" id="tahun_foto" value="2026" required
+                        class="w-full border-2 border-black bg-white px-4 py-3 font-medium text-black focus:outline-none focus:ring-0 focus:bg-yellow-50 shadow-[4px_4px_0_0] shadow-black transition-colors dark:bg-[#1e222d] dark:border-[#282d3c] dark:text-white dark:shadow-[#000000] dark:focus:bg-[#2a3040]" />
+                </div>
+            </div>
+
+            <!-- Tombol Aksi -->
+            <div class="flex gap-4 border-t-2 border-black border-dashed pt-6 dark:border-[#282d3c]">
+                <button type="button"
+                    class="close-modal-btn flex-1 border-2 border-black bg-gray-200 py-3 font-bold text-black shadow-[4px_4px_0_0] shadow-black hover:-translate-y-1 hover:shadow-[6px_6px_0_0] transition-all dark:bg-gray-700 dark:border-[#282d3c] dark:text-white dark:shadow-[#000000]">
+                    Batal
+                </button>
+                <button type="submit"
+                    class="flex-1 border-2 border-black bg-green-400 py-3 font-bold text-black shadow-[4px_4px_0_0] shadow-black hover:-translate-y-1 hover:shadow-[6px_6px_0_0] transition-all dark:bg-green-600 dark:border-[#282d3c] dark:text-white dark:shadow-[#000000]">
+                    Simpan Foto
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<body class="font-body bg-base text-ink min-h-screen md:flex">
+
+    <!-- Overlay untuk Mobile Sidebar -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar"
+        class="fixed md:static inset-y-0 left-0 z-40 w-64 shrink-0 bg-white border-r-2 border-black p-5 transition-transform -translate-x-full md:translate-x-0 dark:bg-[#14171e] dark:border-[#282d3c]">
+
+        <!-- Header Sidebar Mobile -->
+        <div
+            class="border-2 border-black bg-yellow-200 p-3 flex items-center justify-between md:hidden mb-6 shadow-[4px_4px_0_0] shadow-black dark:bg-yellow-600 dark:border-[#282d3c] dark:shadow-[#000000]">
+            <span class="font-display font-bold text-black dark:text-white">Menu Admin</span>
+            <button id="sidebar-close"
+                class="w-8 h-8 flex items-center justify-center border-2 border-black bg-white hover:bg-red-300 transition-colors dark:border-[#282d3c] dark:bg-gray-800">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-black dark:text-white" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M18 6L6 18M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Navigasi -->
+        <nav class="space-y-3">
+            <a href="profil.html"
+                class="flex items-center gap-3 px-4 py-3 border-2 border-transparent hover:border-black hover:bg-white hover:shadow-[4px_4px_0_0] hover:shadow-black font-semibold text-gray-700 transition-all dark:text-gray-300 dark:hover:bg-[#1e222d] dark:hover:border-[#282d3c] dark:hover:shadow-[#000000]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8" r="4"></circle>
+                    <path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path>
+                </svg>
+                Kelola Profil
+            </a>
+            <a href="portfolio.html"
+                class="flex items-center gap-3 px-4 py-3 border-2 border-transparent hover:border-black hover:bg-white hover:shadow-[4px_4px_0_0] hover:shadow-black font-semibold text-gray-700 transition-all dark:text-gray-300 dark:hover:bg-[#1e222d] dark:hover:border-[#282d3c] dark:hover:shadow-[#000000]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="7" width="18" height="13" rx="2"></rect>
+                    <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+                Kelola Portfolio
+            </a>
+            <!-- Kelola Galeri -->
+            <a href="galeri.html"
+                class="flex items-center gap-3 px-4 py-3 border-2 border-black bg-yellow-300 shadow-[4px_4px_0_0] shadow-black font-bold text-black dark:bg-yellow-500 dark:border-[#282d3c] dark:shadow-[#000000]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                Kelola Gallery
+            </a>
+        </nav>
+
+        <!-- Logout -->
+        <a href="../index.html"
+            class="flex items-center gap-3 px-4 py-3 mt-10 border-2 border-transparent hover:border-black hover:bg-red-200 hover:shadow-[4px_4px_0_0] hover:shadow-black font-bold text-red-600 transition-all dark:text-red-400 dark:hover:bg-red-900/50 dark:hover:border-[#282d3c] dark:hover:shadow-[#000000]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <path d="M16 17l5-5-5-5"></path>
+                <path d="M21 12H9"></path>
+            </svg>
+            Keluar
+        </a>
+    </aside>
+
+    <!-- Konten Utama -->
+    <main class="flex-1 p-6 md:p-10 max-w-6xl">
+
+        <!-- Tombol Buka Sidebar (Mobile) -->
+        <button id="sidebar-open"
+            class="w-12 h-12 flex items-center justify-center border-2 border-black bg-white shadow-[4px_4px_0_0] shadow-black mb-8 md:hidden hover:bg-yellow-200 active:translate-y-1 active:shadow-[2px_2px_0_0] transition-all dark:bg-[#14171e] dark:border-[#282d3c] dark:text-white dark:shadow-[#000000]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M4 7h16M4 12h16M4 17h16"></path>
+            </svg>
+        </button>
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div>
+                <h1 class="font-display text-3xl font-bold dark:text-white">Kelola Galeri</h1>
+                <p class="text-black/70 font-medium mt-2 dark:text-gray-400">Tambah, ubah, atau hapus foto dokumentasi
+                    dari galeri publik.</p>
+            </div>
+            <!-- Tombol Tambah Foto -->
+            <a id="btn-tambah-gallery"
+                class="inline-flex items-center gap-2 border-2 border-black bg-cyan-300 px-5 py-3 font-bold text-black shadow-[4px_4px_0_0] shadow-black hover:-translate-y-1 hover:shadow-[6px_6px_0_0] transition-all whitespace-nowrap dark:bg-cyan-600 dark:border-[#282d3c] dark:text-white dark:shadow-[#000000] dark:hover:shadow-[#000000]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                Tambah Foto
+            </a>
+        </div>
+
+        <!-- Container Daftar Galeri -->
+        <div id="gallery-list" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- Item Galeri 1 -->
+            <article data-item
+                class="border-2 border-black bg-white p-4 flex flex-col shadow-[6px_6px_0_0] shadow-black dark:bg-[#14171e] dark:border-[#282d3c] dark:shadow-[#000000]">
+                <!-- Thumbnail -->
+                <div
+                    class="border-2 border-black overflow-hidden mb-4 aspect-[4/3] bg-gray-100 dark:border-[#282d3c] dark:bg-gray-800">
+                    <img src="https://placehold.co/600x450/e2e8f0/1e293b?text=Arch+Linux+Setup" alt="Arch Linux"
+                        class="w-full h-full object-cover" />
+                </div>
+                <!-- Info Singkat -->
+                <h2 class="font-display font-bold text-lg dark:text-white truncate">Ricing Arch Linux</h2>
+                <div class="flex justify-between items-center mt-2 mb-4">
+                    <span
+                        class="text-xs font-bold px-2 py-1 bg-blue-200 border-2 border-black shadow-[2px_2px_0_0] shadow-black dark:border-[#282d3c] dark:shadow-[#000000]">Setup
+                        & OS</span>
+                    <span class="text-xs font-semibold text-gray-500 dark:text-gray-400">2026</span>
+                </div>
+                <div class="grow"></div>
+                <!-- Tombol Aksi -->
+                <div class="flex gap-2 pt-4 border-t-2 border-black border-dashed dark:border-[#282d3c]">
+                    <button title="Edit"
+                        class="flex-1 border-2 border-black bg-yellow-300 py-2 font-bold text-black text-sm shadow-[2px_2px_0_0] shadow-black hover:-translate-y-[1px] hover:shadow-[3px_3px_0_0] transition-all dark:bg-yellow-600 dark:border-[#282d3c] dark:text-white dark:shadow-[#000000]">
+                        Edit
+                    </button>
+                    <button data-delete title="Hapus"
+                        class="flex-1 border-2 border-black bg-red-300 py-2 font-bold text-black text-sm shadow-[2px_2px_0_0] shadow-black hover:-translate-y-[1px] hover:shadow-[3px_3px_0_0] transition-all dark:bg-red-700 dark:border-[#282d3c] dark:text-white dark:shadow-[#000000]">
+                        Hapus
+                    </button>
+                </div>
+            </article>
+
+        </div>
+
+    </main>
+
+    <script src="../assets/main.js"></script>
+
+    <!-- Inisialisasi Fungsi Khusus Halaman Ini -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof initDeleteButtons === 'function') initDeleteButtons('#gallery-list');
+            if (typeof initImagePreview === 'function') initImagePreview('gallery-image-upload', 'gallery-image-preview');
+
+            window.galleryModal = initModal({
+                modalId: 'gallery-modal',
+                titleId: 'gallery-modal-title',
+                addBtnSelector: '#btn-tambah-gallery',
+                editBtnSelector: 'button[title="Edit"]',
+                addTitle: 'Tambah Foto Galeri',
+                editTitle: 'Edit Foto Galeri'
+            });
+        });
+    </script>
+</body>
+
+</html>

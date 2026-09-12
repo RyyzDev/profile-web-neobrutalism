@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            base: 'var(--bg)',
+            ink: 'var(--ink)',
+            muted: 'var(--muted)',
+            accent: 'var(--accent)',
+            amber: 'var(--amber)',
+          },
+          fontFamily: { display: ['Space Grotesk', 'sans-serif'], body: ['IBM Plex Sans', 'sans-serif'] },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+
+<body class="font-body bg-base text-ink min-h-screen flex items-center justify-center">
+
+  <main class="w-full max-w-md mx-auto px-6 py-14">
+
+    <!-- Tombol Switch Dark/Light Mode -->
+    <div class="flex justify-end mb-4">
+      <button id="theme-toggle" type="button" aria-label="Ubah Tema"
+        class="neu-icon-btn w-11 h-11 flex items-center justify-center shrink-0 text-ink">
+        <!-- Ikon Bulan -->
+        <svg id="theme-toggle-dark-icon" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.7"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+        </svg>
+        <!-- Ikon Matahari -->
+        <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="1.7"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 3v2.25m0 13.5V21m8.966-8.966h-2.25m-13.5 0H3m15.364 6.364l-1.591-1.591M6.758 6.758L5.167 5.167m12.728 0l-1.591 1.591M6.758 17.242l-1.591 1.591M12 18a6 6 0 100-12 6 6 0 000 12z" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Header Navigasi -->
+    <div class="flex items-center gap-4 mb-8">
+      <a href="index.html" title="Kembali ke beranda"
+        class="w-12 h-12 flex items-center justify-center shrink-0 border-2 border-black bg-white shadow-[4px_4px_0_0] shadow-black hover:bg-yellow-200 focus:outline-0 dark:bg-[#14171e] dark:border-[#282d3c] dark:text-[#e6eaf0] dark:shadow-[#000000]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5"></path>
+          <path d="M12 19l-7-7 7-7"></path>
+        </svg>
+      </a>
+      <div>
+        <h1 class="font-display text-2xl font-bold dark:text-white">Admin Access</h1>
+      </div>
+    </div>
+
+    <!-- Login Card -->
+    <div
+      class="border-2 border-black bg-white p-6 sm:p-8 shadow-[8px_8px_0_0] shadow-black dark:bg-[#14171e] dark:border-[#282d3c] dark:shadow-[#000000]">
+      <div class="mb-6">
+        <h2 class="font-display font-bold text-2xl dark:text-white">Welcome Back.</h2>
+        <p class="text-sm text-black/70 dark:text-gray-400 mt-1 font-medium">Ada yang ingin ditambahkan hari ini?</p>
+      </div>
+
+      <form action="#" method="POST" class="space-y-5">
+
+        <!-- Input Email -->
+        <div class="space-y-2">
+          <div class="relative">
+            <input type="email" id="email" name="email" placeholder=" " required
+              class="peer w-full border-2 border-black bg-gray-50 px-4 py-3 font-medium text-black focus:ring-2 focus:ring-yellow-300 focus:outline-0 dark:bg-[#1e222d] dark:border-[#282d3c] dark:text-white dark:focus:ring-yellow-500">
+
+            <label for="email" class="absolute left-3 top-1/2 -translate-y-1/2 bg-gray-50 dark:bg-[#1e222d] px-1 text-base font-bold text-gray-400 transition-all duration-150
+        peer-focus:top-0 peer-focus:text-xs peer-focus:text-black dark:peer-focus:text-yellow-400
+        peer-[&:not(:placeholder-shown)]:top-0 peer-[&:not(:placeholder-shown)]:text-xs">
+              Email
+            </label>
+          </div>
+        </div>
+
+        <!-- Input Password -->
+        <div class="space-y-2">
+          <div class="relative">
+            <input type="password" id="password" name="password" placeholder=" " required
+              class="peer w-full border-2 border-black bg-gray-50 px-4 py-3 pr-28 font-medium text-black focus:ring-2 focus:ring-yellow-300 focus:outline-0 dark:bg-[#1e222d] dark:border-[#282d3c] dark:text-white dark:focus:ring-yellow-500">
+
+            <label for="password" class="absolute left-3 top-1/2 -translate-y-1/2 bg-gray-50 dark:bg-[#1e222d] px-1 text-base font-bold text-gray-400 transition-all duration-150
+        peer-focus:top-0 peer-focus:text-xs peer-focus:text-black dark:peer-focus:text-yellow-400
+        peer-[&:not(:placeholder-shown)]:top-0 peer-[&:not(:placeholder-shown)]:text-xs">
+              Password
+            </label>
+
+            <button type="button" id="toggle-password"
+              class="absolute right-2 top-1/2 -translate-y-1/2 bg-yellow-200 border-2 border-black px-3 py-1.5 text-xs font-bold shadow-[2px_2px_0_0] shadow-black hover:bg-yellow-300 focus:outline-0 dark:bg-yellow-600 dark:border-[#282d3c] dark:shadow-[#000000] dark:text-white dark:hover:bg-yellow-500 transition-colors">
+              Tampilkan
+            </button>
+          </div>
+        </div>
+
+        <!-- Tombol Submit -->
+        <button type="submit"
+          class="w-full block text-center border-2 border-black bg-yellow-300 px-4 py-3 mt-4 font-bold text-black shadow-[4px_4px_0_0] shadow-black hover:bg-yellow-400 hover:translate-y-[2px] hover:shadow-[2px_2px_0_0] transition-all focus:outline-0 dark:border-[#282d3c] dark:shadow-[#000000]">
+          Masuk Dashboard &rarr;
+        </button>
+      </form>
+
+    </div>
+
+  </main>
+
+  <script src="./assets/main.js"></script>
+</body>
+
+</html>
