@@ -10,6 +10,7 @@
     │   ├── main.js
     │   └── style.css
     ├── 404.html
+    ├── chat.html        --> halaman tanya ai (chatbot)
     ├── dashboard/
     │   ├── index.html          --> kelola profil
     │   ├── portfolio.html      --> daftar portfolio

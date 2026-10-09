@@ -10,23 +10,7 @@
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
         rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        base: 'var(--bg)',
-                        ink: 'var(--ink)',
-                        muted: 'var(--muted)',
-                        accent: 'var(--accent)',
-                        amber: 'var(--amber)',
-                    },
-                    fontFamily: { display: ['Space Grotesk', 'sans-serif'], body: ['IBM Plex Sans', 'sans-serif'] },
-                },
-            },
-        };
-    </script>
+    <script src="../assets/main.js"></script>
     <link rel="stylesheet" href="../assets/style.css" />
 </head>
 
@@ -130,8 +114,7 @@
 
         <!-- Form Box -->
         <div class="border-2 border-black bg-white p-6 md:p-8 shadow-[8px_8px_0_0] shadow-black dark:bg-[#14171e] dark:border-[#282d3c] dark:shadow-[#000000]">
-            <form id="portfolio-form" action="portfolio.html" method="GET"
-                onsubmit="event.preventDefault(); alert('Data proyek berhasil disimpan!'); window.location.href='portfolio.html';">
+            <form id="portfolio-form" action="portfolio.html" method="GET">
 
                 <!-- Upload Thumbnail Gambar -->
                 <div class="mb-6">
@@ -198,30 +181,6 @@
         </div>
 
     </main>
-
-    <script src="../assets/main.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof initImagePreview === 'function') {
-                initImagePreview('portfolio-image-upload', 'portfolio-image-preview');
-            }
-
-            // Mode Edit jika terdapat query parameter (?edit=1)
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('edit')) {
-                document.title = 'Edit Proyek — Admin';
-                document.getElementById('page-title').textContent = 'Edit Data Proyek';
-                document.getElementById('page-subtitle').textContent = 'Perbarui detail dan tautan karya proyek Anda.';
-                
-                // Pre-fill data simulasi
-                document.getElementById('judul_proyek').value = 'Sentinel Earth — Prediksi Bencana';
-                document.getElementById('link_proyek').value = 'https://github.com/example/sentinel-earth';
-                document.getElementById('tags_proyek').value = 'FastAPI, XGBoost, CNN';
-                document.getElementById('deskripsi_proyek').value = 'Proyek Prototipe dengan FastAPI dan CNN untuk klasifikasi infrasound dan risiko bencana alam secara real-time.';
-                document.getElementById('portfolio-image-preview').src = 'https://placehold.co/300x300/e2e8f0/1e293b?text=AI';
-            }
-        });
-    </script>
 </body>
 
 </html>

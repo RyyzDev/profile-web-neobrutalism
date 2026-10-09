@@ -1,5 +1,30 @@
 /* =========================================================
-   UTILITAS
+   TAILWIND CONFIGURATION
+   (Memastikan konfigurasi tema aktif tanpa inline script)
+   ========================================================= */
+if (typeof tailwind !== 'undefined') {
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          base: 'var(--bg)',
+          ink: 'var(--ink)',
+          muted: 'var(--muted)',
+          accent: 'var(--accent)',
+          amber: 'var(--amber)',
+        },
+        fontFamily: {
+          display: ['Space Grotesk', 'sans-serif'],
+          body: ['IBM Plex Sans', 'sans-serif'],
+        },
+      },
+    },
+  };
+}
+
+/* =========================================================
+   UTILITAS & NAVIGASI
    ========================================================= */
 
 // Buka/tutup sidebar di layar kecil (semua halaman admin)
@@ -54,9 +79,16 @@ function initImagePreview(inputId, imgId) {
   });
 }
 
+// Otomatis inisialisasi semua input gambar yang ada di halaman
+function initImagePreviews() {
+  initImagePreview('avatar-upload', 'avatar-preview');
+  initImagePreview('portfolio-image-upload', 'portfolio-image-preview');
+  initImagePreview('modal-image-upload', 'modal-image-preview');
+}
+
 // Hapus kartu/baris dari daftar setelah konfirmasi (dipakai di halaman kelola portfolio & FAQ)
-function initDeleteButtons(containerSelector) {
-  document.querySelectorAll(containerSelector + ' [data-delete]').forEach((btn) => {
+function initDeleteButtons() {
+  document.querySelectorAll('[data-delete]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const card = btn.closest('[data-item]');
       if (!card) return;
@@ -65,6 +97,64 @@ function initDeleteButtons(containerSelector) {
       }
     });
   });
+}
+
+// Otomatisasi form-form dashboard (tambah/edit portfolio & FAQ) tanpa inline script
+function initDashboardForms() {
+  // 1. Form Portfolio
+  const portfolioForm = document.getElementById('portfolio-form');
+  if (portfolioForm) {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('edit')) {
+      document.title = 'Edit Proyek — Admin';
+      const pageTitle = document.getElementById('page-title');
+      const pageSubtitle = document.getElementById('page-subtitle');
+      if (pageTitle) pageTitle.textContent = 'Edit Data Proyek';
+      if (pageSubtitle) pageSubtitle.textContent = 'Perbarui detail dan tautan karya proyek Anda.';
+
+      const judul = document.getElementById('judul_proyek');
+      const link = document.getElementById('link_proyek');
+      const tags = document.getElementById('tags_proyek');
+      const desc = document.getElementById('deskripsi_proyek');
+      const imgPrev = document.getElementById('portfolio-image-preview');
+
+      if (judul) judul.value = 'Sentinel Earth — Prediksi Bencana';
+      if (link) link.value = 'https://github.com/example/sentinel-earth';
+      if (tags) tags.value = 'FastAPI, XGBoost, CNN';
+      if (desc) desc.value = 'Proyek Prototipe dengan FastAPI dan CNN untuk klasifikasi infrasound dan risiko bencana alam secara real-time.';
+      if (imgPrev) imgPrev.src = 'https://placehold.co/300x300/e2e8f0/1e293b?text=AI';
+    }
+
+    portfolioForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Data proyek berhasil disimpan!');
+      window.location.href = 'portfolio.html';
+    });
+  }
+
+  // 2. Form FAQ
+  const faqForm = document.getElementById('faq-form');
+  if (faqForm) {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('edit')) {
+      document.title = 'Edit FAQ — Admin';
+      const pageTitle = document.getElementById('page-title');
+      const pageSubtitle = document.getElementById('page-subtitle');
+      if (pageTitle) pageTitle.textContent = 'Edit Data FAQ';
+      if (pageSubtitle) pageSubtitle.textContent = 'Perbarui teks pertanyaan atau jawaban FAQ.';
+
+      const tanya = document.getElementById('pertanyaan');
+      const jawab = document.getElementById('jawaban');
+      if (tanya) tanya.value = 'Sehari butuh berapa gelas kopi kalo lagi ngoding?';
+      if (jawab) jawab.value = 'mungkin 4-6 gelas kopi tanpa gula :)';
+    }
+
+    faqForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Data FAQ berhasil disimpan!');
+      window.location.href = 'faq.html';
+    });
+  }
 }
 
 // Dark/Light mode
@@ -134,51 +224,57 @@ function initHiddenAdminTrigger() {
   });
 }
 
-// Widget Chatbot Expand/Collapse & Logika Percakapan
+/* =========================================================
+   CHATBOT & TANYA AI (PAGE & WIDGET ENGINE)
+   ========================================================= */
 function initChatbot() {
+  const messagesContainer = document.getElementById('chatbot-messages');
+  const form = document.getElementById('chatbot-form');
+  const input = document.getElementById('chatbot-input');
+
+  // Jika halaman tidak memiliki container chatbot, lewati
+  if (!messagesContainer || !form) return;
+
+  // Elemen popup toggle (jika ada widget collapse)
   const toggleBtn = document.getElementById('chatbot-toggle-btn');
   const chatWindow = document.getElementById('chatbot-window');
   const collapseBtn = document.getElementById('chatbot-collapse-btn');
-  const form = document.getElementById('chatbot-form');
-  const input = document.getElementById('chatbot-input');
-  const messagesContainer = document.getElementById('chatbot-messages');
   const iconOpen = document.getElementById('chatbot-icon-open');
   const iconClose = document.getElementById('chatbot-icon-close');
   const toggleText = document.getElementById('chatbot-toggle-text');
 
-  if (!toggleBtn || !chatWindow) return;
+  if (toggleBtn && chatWindow) {
+    let isOpen = false;
+    const setChatState = (open) => {
+      isOpen = open;
+      if (isOpen) {
+        chatWindow.classList.remove('hidden');
+        chatWindow.classList.add('flex');
+        if (iconOpen) iconOpen.classList.add('hidden');
+        if (iconClose) iconClose.classList.remove('hidden');
+        if (toggleText) toggleText.textContent = 'Tutup';
+        if (input) input.focus();
+        scrollBottom();
+      } else {
+        chatWindow.classList.add('hidden');
+        chatWindow.classList.remove('flex');
+        if (iconOpen) iconOpen.classList.remove('hidden');
+        if (iconClose) iconClose.classList.add('hidden');
+        if (toggleText) toggleText.textContent = 'Tanya AI';
+      }
+    };
 
-  let isOpen = false;
-
-  const setChatState = (open) => {
-    isOpen = open;
-    if (isOpen) {
-      chatWindow.classList.remove('hidden');
-      chatWindow.classList.add('flex');
-      if (iconOpen) iconOpen.classList.add('hidden');
-      if (iconClose) iconClose.classList.remove('hidden');
-      if (toggleText) toggleText.textContent = 'Tutup';
-      if (input) input.focus();
-      scrollBottom();
-    } else {
-      chatWindow.classList.add('hidden');
-      chatWindow.classList.remove('flex');
-      if (iconOpen) iconOpen.classList.remove('hidden');
-      if (iconClose) iconClose.classList.add('hidden');
-      if (toggleText) toggleText.textContent = 'Tanya AI';
-    }
-  };
-
-  toggleBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    setChatState(!isOpen);
-  });
-
-  if (collapseBtn) {
-    collapseBtn.addEventListener('click', (e) => {
+    toggleBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      setChatState(false);
+      setChatState(!isOpen);
     });
+
+    if (collapseBtn) {
+      collapseBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        setChatState(false);
+      });
+    }
   }
 
   const scrollBottom = () => {
@@ -187,11 +283,17 @@ function initChatbot() {
     }
   };
 
+  const escapeHTML = (str) => {
+    return str.replace(/[&<>'"]/g, 
+      tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+    );
+  };
+
   const appendUserMessage = (text) => {
     const bubble = document.createElement('div');
     bubble.className = 'flex justify-end';
     bubble.innerHTML = `
-      <div class="border-2 border-black bg-yellow-200 p-2.5 shadow-[2px_2px_0_0] shadow-black max-w-[85%] text-black dark:border-[#282d3c] dark:bg-yellow-500/90 dark:text-black dark:shadow-[#000000]">
+      <div class="border-2 border-black bg-yellow-200 p-2.5 sm:p-3 shadow-[2px_2px_0_0] shadow-black max-w-[85%] text-black dark:border-[#282d3c] dark:bg-yellow-500/90 dark:text-black dark:shadow-[#000000]">
         <p class="leading-relaxed break-words">${escapeHTML(text)}</p>
       </div>
     `;
@@ -266,23 +368,17 @@ function initChatbot() {
 
   const appendBotMessage = (text) => {
     const bubble = document.createElement('div');
-    bubble.className = 'flex items-start gap-2';
+    bubble.className = 'flex items-start gap-3';
     bubble.innerHTML = `
-      <div class="shrink-0 w-6 h-6 rounded-full border border-black bg-yellow-200 flex items-center justify-center text-xs font-bold dark:border-[#282d3c] text-ink">
+      <div class="shrink-0 w-8 h-8 rounded-full border-2 border-black bg-yellow-200 flex items-center justify-center text-xs font-bold dark:border-[#282d3c] text-ink">
         AI
       </div>
-      <div class="border-2 border-black bg-white p-3 shadow-[2px_2px_0_0] shadow-black max-w-[88%] text-ink dark:bg-[#1e222d] dark:border-[#282d3c] dark:shadow-[#000000] text-sm overflow-hidden">
+      <div class="border-2 border-black bg-white p-3 sm:p-4 shadow-[3px_3px_0_0] shadow-black max-w-[88%] text-ink dark:bg-[#1e222d] dark:border-[#282d3c] dark:shadow-[#000000] text-sm overflow-hidden">
         <div class="chatbot-prose leading-relaxed break-words">${parseMarkdown(text)}</div>
       </div>
     `;
     messagesContainer.appendChild(bubble);
     scrollBottom();
-  };
-
-  const escapeHTML = (str) => {
-    return str.replace(/[&<>'"]/g, 
-      tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
-    );
   };
 
   const getBotResponse = (query) => {
@@ -354,7 +450,7 @@ Kamu bisa menelusuri halaman [Portofolio](portfolio.html) untuk melihat karya sa
     const typingId = 'typing-' + Date.now();
     const typingEl = document.createElement('div');
     typingEl.id = typingId;
-    typingEl.className = 'flex items-start gap-2 text-xs text-black/60 dark:text-gray-400 italic pl-8';
+    typingEl.className = 'flex items-start gap-2 text-xs text-black/60 dark:text-gray-400 italic pl-11';
     typingEl.textContent = 'AI sedang mengetik...';
     messagesContainer.appendChild(typingEl);
     scrollBottom();
@@ -366,14 +462,13 @@ Kamu bisa menelusuri halaman [Portofolio](portfolio.html) untuk melihat karya sa
     }, 600);
   };
 
-  if (form && input) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const val = input.value;
-      input.value = '';
-      handleSend(val);
-    });
-  }
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!input) return;
+    const val = input.value;
+    input.value = '';
+    handleSend(val);
+  });
 
   // Quick suggestion chips
   document.querySelectorAll('.chatbot-chip').forEach((chip) => {
@@ -384,9 +479,15 @@ Kamu bisa menelusuri halaman [Portofolio](portfolio.html) untuk melihat karya sa
   });
 }
 
+/* =========================================================
+   INISIALISASI SEMUA KOMPONEN
+   ========================================================= */
 function initAll() {
   initSidebarToggle();
   initPasswordToggle();
+  initImagePreviews();
+  initDeleteButtons();
+  initDashboardForms();
   switchTheme();
   initHiddenAdminTrigger();
   initChatbot();

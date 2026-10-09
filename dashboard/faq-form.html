@@ -10,23 +10,7 @@
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
         rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        base: 'var(--bg)',
-                        ink: 'var(--ink)',
-                        muted: 'var(--muted)',
-                        accent: 'var(--accent)',
-                        amber: 'var(--amber)',
-                    },
-                    fontFamily: { display: ['Space Grotesk', 'sans-serif'], body: ['IBM Plex Sans', 'sans-serif'] },
-                },
-            },
-        };
-    </script>
+    <script src="../assets/main.js"></script>
     <link rel="stylesheet" href="../assets/style.css" />
 </head>
 
@@ -130,8 +114,7 @@
 
         <!-- Form Box -->
         <div class="border-2 border-black bg-white p-6 md:p-8 shadow-[8px_8px_0_0] shadow-black dark:bg-[#14171e] dark:border-[#282d3c] dark:shadow-[#000000]">
-            <form id="faq-form" action="faq.html" method="GET"
-                onsubmit="event.preventDefault(); alert('Data FAQ berhasil disimpan!'); window.location.href='faq.html';">
+            <form id="faq-form" action="faq.html" method="GET">
 
                 <!-- Pertanyaan -->
                 <div class="mb-6">
@@ -163,23 +146,6 @@
         </div>
 
     </main>
-
-    <script src="../assets/main.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Mode Edit jika terdapat query parameter (?edit=1)
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('edit')) {
-                document.title = 'Edit FAQ — Admin';
-                document.getElementById('page-title').textContent = 'Edit Data FAQ';
-                document.getElementById('page-subtitle').textContent = 'Perbarui teks pertanyaan atau jawaban FAQ.';
-                
-                // Pre-fill data simulasi
-                document.getElementById('pertanyaan').value = 'Sehari butuh berapa gelas kopi kalo lagi ngoding?';
-                document.getElementById('jawaban').value = 'mungkin 4-6 gelas kopi tanpa gula :)';
-            }
-        });
-    </script>
 </body>
 
 </html>
