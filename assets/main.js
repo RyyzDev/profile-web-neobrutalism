@@ -54,17 +54,7 @@ function initImagePreview(inputId, imgId) {
   });
 }
 
-// Tampilkan pesan status sementara di bawah tombol simpan 
-function flashStatus(elementId, message) {
-  const el = document.getElementById(elementId);
-  if (!el) return;
-  el.textContent = message;
-  el.classList.remove('opacity-0');
-  clearTimeout(el._timeout);
-  el._timeout = setTimeout(() => el.classList.add('opacity-0'), 2200);
-}
-
-// Hapus kartu/baris dari daftar setelah konfirmasi (dipakai di halaman kelola portfolio & sertifikasi)
+// Hapus kartu/baris dari daftar setelah konfirmasi (dipakai di halaman kelola portfolio & FAQ)
 function initDeleteButtons(containerSelector) {
   document.querySelectorAll(containerSelector + ' [data-delete]').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -144,84 +134,266 @@ function initHiddenAdminTrigger() {
   });
 }
 
-// Fungsi untuk buka tutup Modals
-function initModal(config) {
-  const modal = document.getElementById(config.modalId);
-  if (!modal) return null;
+// Widget Chatbot Expand/Collapse & Logika Percakapan
+function initChatbot() {
+  const toggleBtn = document.getElementById('chatbot-toggle-btn');
+  const chatWindow = document.getElementById('chatbot-window');
+  const collapseBtn = document.getElementById('chatbot-collapse-btn');
+  const form = document.getElementById('chatbot-form');
+  const input = document.getElementById('chatbot-input');
+  const messagesContainer = document.getElementById('chatbot-messages');
+  const iconOpen = document.getElementById('chatbot-icon-open');
+  const iconClose = document.getElementById('chatbot-icon-close');
+  const toggleText = document.getElementById('chatbot-toggle-text');
 
-  const modalContent = modal.querySelector('.neo-modal-content') || modal.querySelector('[id$="-modal-content"]') || modal.querySelector('div');
-  const modalTitle = document.getElementById(config.titleId);
+  if (!toggleBtn || !chatWindow) return;
 
-  const openModal = (isEdit = false) => {
-    modal.classList.remove('hidden');
-    // Memastikan display flex aktif saat modal dibuka
-    modal.classList.add('flex');
-    setTimeout(() => {
-      modal.classList.remove('opacity-0');
-      if (modalContent) {
-        modalContent.classList.remove('scale-95');
-        modalContent.classList.add('scale-100');
-      }
-    }, 10);
+  let isOpen = false;
 
-    if (modalTitle) {
-      modalTitle.textContent = isEdit ? config.editTitle : config.addTitle;
+  const setChatState = (open) => {
+    isOpen = open;
+    if (isOpen) {
+      chatWindow.classList.remove('hidden');
+      chatWindow.classList.add('flex');
+      if (iconOpen) iconOpen.classList.add('hidden');
+      if (iconClose) iconClose.classList.remove('hidden');
+      if (toggleText) toggleText.textContent = 'Tutup';
+      if (input) input.focus();
+      scrollBottom();
+    } else {
+      chatWindow.classList.add('hidden');
+      chatWindow.classList.remove('flex');
+      if (iconOpen) iconOpen.classList.remove('hidden');
+      if (iconClose) iconClose.classList.add('hidden');
+      if (toggleText) toggleText.textContent = 'Tanya AI';
     }
   };
 
-  const closeModal = () => {
-    modal.classList.add('opacity-0');
-    if (modalContent) {
-      modalContent.classList.remove('scale-100');
-      modalContent.classList.add('scale-95');
-    }
-    setTimeout(() => {
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }, 300);
-  };
-
-  // Event Listener untuk Tombol Tambah
-  if (config.addBtnSelector) {
-    document.querySelectorAll(config.addBtnSelector).forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        openModal(false);
-      });
-    });
-  }
-
-  // Event Listener untuk Tombol Edit
-  if (config.editBtnSelector) {
-    document.querySelectorAll(config.editBtnSelector).forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        openModal(true);
-      });
-    });
-  }
-
-  // Event Listener Global Modal (Menangani Tombol Close & Klik Backdrop)
-  modal.addEventListener('click', (e) => {
-    // Jika yang diklik adalah tombol close (atau elemen di dalam tombol close)
-    if (e.target.closest('.close-modal-btn, #close-modal-btn, [data-close-modal]')) {
-      e.preventDefault();
-      closeModal();
-      return;
-    }
-    // Jika yang diklik adalah backdrop hitam luar
-    if (e.target === modal) {
-      closeModal();
-    }
+  toggleBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    setChatState(!isOpen);
   });
 
-  return { open: openModal, close: closeModal };
+  if (collapseBtn) {
+    collapseBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      setChatState(false);
+    });
+  }
+
+  const scrollBottom = () => {
+    if (messagesContainer) {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+  };
+
+  const appendUserMessage = (text) => {
+    const bubble = document.createElement('div');
+    bubble.className = 'flex justify-end';
+    bubble.innerHTML = `
+      <div class="border-2 border-black bg-yellow-200 p-2.5 shadow-[2px_2px_0_0] shadow-black max-w-[85%] text-black dark:border-[#282d3c] dark:bg-yellow-500/90 dark:text-black dark:shadow-[#000000]">
+        <p class="leading-relaxed break-words">${escapeHTML(text)}</p>
+      </div>
+    `;
+    messagesContainer.appendChild(bubble);
+    scrollBottom();
+  };
+
+  const parseMarkdown = (md) => {
+    if (!md) return '';
+
+    // 1. Ekstrak code blocks dan amankan agar tidak terpengaruh format inline
+    const codeBlocks = [];
+    let html = md.replace(/```([a-zA-Z0-9_-]*)\n?([\s\S]*?)```/g, (match, lang, code) => {
+      const placeholder = `TOKENCODE${codeBlocks.length}TOKEN`;
+      const escapedCode = code.trim().replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      codeBlocks.push(
+        `<pre class="my-2 p-2.5 bg-gray-900 text-gray-100 dark:bg-black rounded border-2 border-black dark:border-[#282d3c] overflow-x-auto text-xs font-mono"><code>${escapedCode}</code></pre>`
+      );
+      return placeholder;
+    });
+
+    // 2. Heading (# H1, ## H2, ### H3, #### H4)
+    html = html.replace(/^####\s+(.*?)$/gm, '<h4 class="font-display font-bold text-xs mt-2 mb-1 text-ink">$1</h4>');
+    html = html.replace(/^###\s+(.*?)$/gm, '<h3 class="font-display font-bold text-sm mt-2.5 mb-1 text-ink">$1</h3>');
+    html = html.replace(/^##\s+(.*?)$/gm, '<h2 class="font-display font-bold text-base mt-3 mb-1 text-ink border-b border-black/10 dark:border-white/10 pb-1">$1</h2>');
+    html = html.replace(/^#\s+(.*?)$/gm, '<h1 class="font-display font-bold text-lg mt-3 mb-1.5 text-ink border-b-2 border-black/20 dark:border-white/20 pb-1">$1</h1>');
+
+    // 3. Blockquote (> kutipan)
+    html = html.replace(/^>\s+(.*?)$/gm, '<blockquote class="border-l-4 border-yellow-400 pl-2.5 my-2 italic text-ink/85">$1</blockquote>');
+
+    // 4. Horizontal Rule (---, ***, ___)
+    html = html.replace(/^(?:---|\*\*\*|___)\s*$/gm, '<hr class="my-2.5 border-t border-black/20 dark:border-white/20" />');
+
+    // 5. Inline Code (`code`)
+    html = html.replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-yellow-100 text-black dark:bg-[#282d3c] dark:text-yellow-300 font-mono text-xs border border-black/20">$1</code>');
+
+    // 6. Format Teks (Bold, Italic, Strikethrough)
+    html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
+    html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-ink">$1</strong>');
+    html = html.replace(/__(.*?)__/g, '<strong class="font-bold text-ink">$1</strong>');
+    html = html.replace(/\*(.*?)\*/g, '<em class="italic">$1</em>');
+    html = html.replace(/_([^_]+)_/g, '<em class="italic">$1</em>');
+    html = html.replace(/~~(.*?)~~/g, '<del class="line-through text-ink/70">$1</del>');
+
+    // 7. Links ([text](url))
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="underline font-bold text-blue-600 hover:text-blue-800 dark:text-yellow-400 dark:hover:text-yellow-300">$1</a>');
+
+    // 8. Lists (Unordered & Ordered)
+    html = html.replace(/^[\*\-]\s+(.+)$/gm, '<li class="ml-4 list-disc">$1</li>');
+    html = html.replace(/^\d+\.\s+(.+)$/gm, '<li class="ml-4 list-decimal">$1</li>');
+    html = html.replace(/((?:<li class="ml-4 list-disc">[\s\S]*?<\/li>\n?)+)/g, '<ul class="my-2 space-y-0.5">$1</ul>');
+    html = html.replace(/((?:<li class="ml-4 list-decimal">[\s\S]*?<\/li>\n?)+)/g, '<ol class="my-2 space-y-0.5">$1</ol>');
+
+    // 9. Paragraf & Baris Baru
+    const blocks = html.split(/\n{2,}/);
+    html = blocks.map((b) => {
+      b = b.trim();
+      if (!b) return '';
+      if (/^<(h[1-6]|pre|ul|ol|blockquote|hr|TOKENCODE)/.test(b)) {
+        return b;
+      }
+      return `<p class="leading-relaxed my-1">${b.replace(/\n/g, '<br />')}</p>`;
+    }).filter(Boolean).join('\n');
+
+    // 10. Kembalikan code blocks yang disimpan
+    codeBlocks.forEach((block, i) => {
+      html = html.replace(`TOKENCODE${i}TOKEN`, block);
+    });
+
+    return html;
+  };
+
+  const appendBotMessage = (text) => {
+    const bubble = document.createElement('div');
+    bubble.className = 'flex items-start gap-2';
+    bubble.innerHTML = `
+      <div class="shrink-0 w-6 h-6 rounded-full border border-black bg-yellow-200 flex items-center justify-center text-xs font-bold dark:border-[#282d3c] text-ink">
+        AI
+      </div>
+      <div class="border-2 border-black bg-white p-3 shadow-[2px_2px_0_0] shadow-black max-w-[88%] text-ink dark:bg-[#1e222d] dark:border-[#282d3c] dark:shadow-[#000000] text-sm overflow-hidden">
+        <div class="chatbot-prose leading-relaxed break-words">${parseMarkdown(text)}</div>
+      </div>
+    `;
+    messagesContainer.appendChild(bubble);
+    scrollBottom();
+  };
+
+  const escapeHTML = (str) => {
+    return str.replace(/[&<>'"]/g, 
+      tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+    );
+  };
+
+  const getBotResponse = (query) => {
+    const q = query.toLowerCase();
+    if (q.includes('keahlian') || q.includes('skill') || q.includes('teknologi') || q.includes('stack')) {
+      return `### Keahlian & Teknologi
+Berikut adalah tools dan teknologi utama yang saya gunakan sehari-hari:
+- **Backend**: Laravel, PHP Modern, RESTful API
+- **Frontend**: Tailwind CSS, Alpine.js, JavaScript
+- **Database**: MySQL, PostgreSQL
+- **DevOps/Tools**: Git, Linux Environment, Docker
+
+Ingin tahu lebih banyak tentang proyek yang telah diselesaikan? Coba tanyakan *"Lihat proyek portofolio"*.`;
+    }
+    if (q.includes('proyek') || q.includes('portofolio') || q.includes('karya') || q.includes('project')) {
+      return `### Proyek Pilihan
+Beberapa proyek yang pernah saya kerjakan:
+1. **Sentinel Earth** — Sistem cerdas pemantau & klasifikasi risiko bencana alam berbasis FastAPI & CNN.
+2. **GosGodinov POS** — Aplikasi Point of Sales modern untuk manajemen transaksi kasir toko.
+
+Kamu bisa membuka halaman [Portofolio Saya](portfolio.html) untuk melihat preview dan detail lengkapnya!`;
+    }
+    if (q.includes('kontak') || q.includes('hubungi') || q.includes('email') || q.includes('sosial') || q.includes('sosmed')) {
+      return `### Hubungi Saya
+Silakan hubungi saya melalui saluran berikut:
+- **Email**: [emailmu@domain.com](mailto:emailmu@domain.com)
+- **GitHub**: [github.com/username](https://github.com/username)
+- **Instagram**: [instagram.com/username](https://instagram.com/username)
+- **X (Twitter)**: [x.com/username](https://x.com/username)
+
+Saya selalu terbuka untuk diskusi proyek baru dan kolaborasi!`;
+    }
+    if (q.includes('kopi') || q.includes('ngoding') || q.includes('minum')) {
+      return `> *"mungkin 4-6 gelas kopi tanpa gula :)"* ☕
+
+Formula rahasia saat ngoding berjam-jam untuk menumpas bug!`;
+    }
+    if (q.includes('halo') || q.includes('hai') || q.includes('hi') || q.includes('siapa')) {
+      return `Halo! 👋 Saya adalah **Asisten AI** di web profil ini.
+
+Saya bisa membantu menjawab seputar:
+- Keahlian teknis & teknologi
+- Proyek dan karya portofolio
+- Informasi kontak & media sosial
+
+Ada yang ingin kamu tanyakan?`;
+    }
+    if (q.includes('terima kasih') || q.includes('makasih') || q.includes('thanks')) {
+      return `Sama-sama! Senang bisa membantu. Jangan ragu bertanya lagi jika butuh info lainnya ya! 🙌`;
+    }
+    // Jika user menguji format markdown secara langsung
+    if (query.startsWith('#') || query.includes('```') || query.includes('**')) {
+      return `### Pratinjau Markdown
+Berikut hasil parsing dari teks yang kamu masukkan:
+
+${query}`;
+    }
+    return `Terima kasih atas pertanyaannya!
+
+Kamu bisa menelusuri halaman [Portofolio](portfolio.html) untuk melihat karya saya, atau langsung menghubungi lewat [emailmu@domain.com](mailto:emailmu@domain.com).`;
+  };
+
+  const handleSend = (text) => {
+    if (!text || !text.trim()) return;
+    const cleanText = text.trim();
+    appendUserMessage(cleanText);
+
+    // Tampilkan animasi mengetik sementara
+    const typingId = 'typing-' + Date.now();
+    const typingEl = document.createElement('div');
+    typingEl.id = typingId;
+    typingEl.className = 'flex items-start gap-2 text-xs text-black/60 dark:text-gray-400 italic pl-8';
+    typingEl.textContent = 'AI sedang mengetik...';
+    messagesContainer.appendChild(typingEl);
+    scrollBottom();
+
+    setTimeout(() => {
+      const el = document.getElementById(typingId);
+      if (el) el.remove();
+      appendBotMessage(getBotResponse(cleanText));
+    }, 600);
+  };
+
+  if (form && input) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = input.value;
+      input.value = '';
+      handleSend(val);
+    });
+  }
+
+  // Quick suggestion chips
+  document.querySelectorAll('.chatbot-chip').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const text = chip.textContent.trim();
+      handleSend(text);
+    });
+  });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function initAll() {
   initSidebarToggle();
   initPasswordToggle();
   switchTheme();
   initHiddenAdminTrigger();
-  initModal();
-});
+  initChatbot();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAll);
+} else {
+  initAll();
+}

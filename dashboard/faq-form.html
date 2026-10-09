@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kelola FAQ — Admin</title>
+    <title>Form FAQ — Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
@@ -29,6 +29,7 @@
     </script>
     <link rel="stylesheet" href="../assets/style.css" />
 </head>
+
 <body class="font-body bg-base text-ink min-h-screen md:flex">
 
     <!-- Overlay untuk Mobile Sidebar -->
@@ -62,7 +63,6 @@
                 </svg>
                 Kelola Profil
             </a>
-            <!-- Active Link Berpindah ke Kelola Portfolio -->
             <a href="portfolio.html"
                 class="flex items-center gap-3 px-4 py-3 border-2 border-transparent hover:border-black hover:bg-white hover:shadow-[4px_4px_0_0] hover:shadow-black font-semibold text-gray-700 transition-all dark:text-gray-300 dark:hover:bg-[#1e222d] dark:hover:border-[#282d3c] dark:hover:shadow-[#000000]">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none"
@@ -72,17 +72,18 @@
                 </svg>
                 Kelola Portfolio
             </a>
+            <!-- Active Link: Kelola FAQ -->
             <a href="faq.html"
                 class="flex items-center gap-3 px-4 py-3 border-2 border-black bg-yellow-300 shadow-[4px_4px_0_0] shadow-black font-bold text-black dark:bg-yellow-500 dark:border-[#282d3c] dark:shadow-[#000000]">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-          <line x1="12" y1="17" x2="12.01" y2="17"></line>
-        </svg>
-        Kelola FAQ
-      </a>
-    </nav>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                Kelola FAQ
+            </a>
+        </nav>
 
         <!-- Logout -->
         <a href="../index.html"
@@ -98,63 +99,87 @@
     </aside>
 
     <!-- Konten Utama -->
-    <main class="flex-1 p-6 md:p-10 max-w-6xl">
+    <main class="flex-1 p-6 md:p-10 max-w-4xl">
 
         <!-- Tombol Buka Sidebar (Mobile) -->
         <button id="sidebar-open"
-            class="w-12 h-12 flex items-center justify-center border-2 border-black bg-white shadow-[4px_4px_0_0] shadow-black mb-8 md:hidden hover:bg-yellow-200 active:translate-y-1 active:shadow-[2px_2px_0_0] transition-all dark:bg-[#14171e] dark:border-[#282d3c] dark:text-white dark:shadow-[#000000]">
+            class="w-12 h-12 flex items-center justify-center border-2 border-black bg-white shadow-[4px_4px_0_0] shadow-black mb-6 md:hidden hover:bg-yellow-200 active:translate-y-1 active:shadow-[2px_2px_0_0] transition-all dark:bg-[#14171e] dark:border-[#282d3c] dark:text-white dark:shadow-[#000000]">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round">
                 <path d="M4 7h16M4 12h16M4 17h16"></path>
             </svg>
         </button>
 
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-            <div>
-                <h1 class="font-display text-3xl font-bold dark:text-white">Kelola FAQ</h1>
-                <p class="text-black/70 font-medium mt-2 dark:text-gray-400">Tambah, ubah, atau hapus pertanyaan (QnA / FAQ) yang tampil di halaman beranda.</p>
-            </div>
-            <!-- Tombol Tambah FAQ -->
-            <a href="faq-form.html" id="btn-tambah-faq"
-                class="inline-flex items-center gap-2 border-2 border-black bg-cyan-300 px-5 py-3 font-bold text-black shadow-[4px_4px_0_0] shadow-black hover:-translate-y-1 hover:shadow-[6px_6px_0_0] transition-all whitespace-nowrap dark:bg-cyan-600 dark:border-[#282d3c] dark:text-white dark:shadow-[#000000] dark:hover:shadow-[#000000]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
-                Tambah FAQ
-            </a>
+        <!-- Tombol Kembali -->
+        <a href="faq.html"
+            class="inline-flex items-center gap-2 font-bold text-sm mb-6 text-ink hover:underline">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Kembali ke Daftar FAQ
+        </a>
+
+        <!-- Header Halaman -->
+        <div class="mb-8">
+            <h1 id="page-title" class="font-display text-3xl font-bold dark:text-white">Tambah FAQ Baru</h1>
+            <p id="page-subtitle" class="text-black/70 font-medium mt-2 dark:text-gray-400">
+                Buat pertanyaan dan jawaban yang sering diajukan untuk pengunjung website.
+            </p>
         </div>
 
-        <!-- Container Daftar FAQ -->
-        <div id="faq-list" class="grid lg:grid-cols-2 gap-8 mb-10">
-            <!-- Item FAQ 1 -->
-            <article data-item class="border-2 border-black bg-white p-5 flex flex-col shadow-[6px_6px_0_0] shadow-black dark:bg-[#14171e] dark:border-[#282d3c] dark:shadow-[#000000]">
-                <div class="flex flex-col gap-3 h-full">
-                    <div>
-                        <h2 class="font-display font-bold text-xl leading-tight dark:text-white">Sehari butuh berapa gelas kopi kalo lagi ngoding?</h2>
-                    </div>
-                    <p class="text-sm text-black/70 mt-2 line-clamp-3 dark:text-gray-400">
-                        mungkin 4-6 gelas kopi tanpa gula :)
-                    </p>
-                    <div class="grow"></div>
-                    <!-- Aksi -->
-                    <div class="flex gap-3 mt-4 pt-4 border-t-2 border-black/10 dark:border-white/10">
-                        <a href="faq-form.html?edit=1" class="btn-edit text-sm font-bold text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400">Edit</a>
-                        <button type="button" class="btn-delete text-sm font-bold text-red-600 hover:text-red-800 hover:underline dark:text-red-400">Hapus</button>
-                    </div>
+        <!-- Form Box -->
+        <div class="border-2 border-black bg-white p-6 md:p-8 shadow-[8px_8px_0_0] shadow-black dark:bg-[#14171e] dark:border-[#282d3c] dark:shadow-[#000000]">
+            <form id="faq-form" action="faq.html" method="GET"
+                onsubmit="event.preventDefault(); alert('Data FAQ berhasil disimpan!'); window.location.href='faq.html';">
+
+                <!-- Pertanyaan -->
+                <div class="mb-6">
+                    <label for="pertanyaan" class="block font-bold text-sm text-black mb-2 dark:text-white">Pertanyaan</label>
+                    <input type="text" id="pertanyaan" placeholder="Contoh: Sehari butuh berapa gelas kopi kalo lagi ngoding?" required
+                        class="w-full border-2 border-black bg-white px-4 py-3 font-medium text-black focus:outline-none focus:ring-0 focus:bg-yellow-50 shadow-[4px_4px_0_0] shadow-black transition-colors dark:bg-[#1e222d] dark:border-[#282d3c] dark:text-white dark:shadow-[#000000] dark:focus:bg-[#2a3040]" />
                 </div>
-            </article>
+
+                <!-- Jawaban -->
+                <div class="mb-8">
+                    <label for="jawaban" class="block font-bold text-sm text-black mb-2 dark:text-white">Jawaban</label>
+                    <textarea id="jawaban" rows="5" required placeholder="Contoh: mungkin 4-6 gelas kopi tanpa gula :)"
+                        class="w-full resize-y border-2 border-black bg-white p-4 font-medium text-black leading-relaxed focus:outline-none focus:ring-0 focus:bg-yellow-50 shadow-[4px_4px_0_0] shadow-black transition-colors dark:bg-[#1e222d] dark:border-[#282d3c] dark:text-white dark:shadow-[#000000] dark:focus:bg-[#2a3040]"></textarea>
+                </div>
+
+                <!-- Tombol Aksi -->
+                <div class="flex flex-col sm:flex-row gap-4 border-t-2 border-black border-dashed pt-6 dark:border-[#282d3c]">
+                    <a href="faq.html"
+                        class="text-center sm:flex-1 border-2 border-black bg-gray-200 py-3 font-bold text-black shadow-[4px_4px_0_0] shadow-black hover:-translate-y-1 hover:shadow-[6px_6px_0_0] transition-all dark:bg-gray-700 dark:border-[#282d3c] dark:text-white dark:shadow-[#000000]">
+                        Batal
+                    </a>
+                    <button type="submit"
+                        class="sm:flex-1 border-2 border-black bg-green-400 py-3 font-bold text-black shadow-[4px_4px_0_0] shadow-black hover:-translate-y-1 hover:shadow-[6px_6px_0_0] transition-all dark:bg-green-600 dark:border-[#282d3c] dark:text-white dark:shadow-[#000000]">
+                        Simpan FAQ
+                    </button>
+                </div>
+
+            </form>
         </div>
-</main>
+
+    </main>
 
     <script src="../assets/main.js"></script>
-
-    <!-- Inisialisasi Fungsi Khusus Halaman Ini -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            if (typeof initDeleteButtons === 'function') initDeleteButtons('#faq-list');
+            // Mode Edit jika terdapat query parameter (?edit=1)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('edit')) {
+                document.title = 'Edit FAQ — Admin';
+                document.getElementById('page-title').textContent = 'Edit Data FAQ';
+                document.getElementById('page-subtitle').textContent = 'Perbarui teks pertanyaan atau jawaban FAQ.';
+                
+                // Pre-fill data simulasi
+                document.getElementById('pertanyaan').value = 'Sehari butuh berapa gelas kopi kalo lagi ngoding?';
+                document.getElementById('jawaban').value = 'mungkin 4-6 gelas kopi tanpa gula :)';
+            }
         });
     </script>
 </body>
+
 </html>
