@@ -149,7 +149,7 @@ function initModal(config) {
   const modal = document.getElementById(config.modalId);
   if (!modal) return null;
 
-  const modalContent = modal.querySelector('.neo-modal-content');
+  const modalContent = modal.querySelector('.neo-modal-content') || modal.querySelector('[id$="-modal-content"]') || modal.querySelector('div');
   const modalTitle = document.getElementById(config.titleId);
 
   const openModal = (isEdit = false) => {
@@ -204,7 +204,7 @@ function initModal(config) {
   // Event Listener Global Modal (Menangani Tombol Close & Klik Backdrop)
   modal.addEventListener('click', (e) => {
     // Jika yang diklik adalah tombol close (atau elemen di dalam tombol close)
-    if (e.target.closest('.close-modal-btn')) {
+    if (e.target.closest('.close-modal-btn, #close-modal-btn, [data-close-modal]')) {
       e.preventDefault();
       closeModal();
       return;

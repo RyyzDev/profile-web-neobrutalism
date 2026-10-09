@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kelola Portfolio — Admin</title>
+    <title>Kelola FAQ — Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
@@ -64,7 +64,7 @@
             </a>
             <!-- Active Link Berpindah ke Kelola Portfolio -->
             <a href="portfolio.html"
-                class="flex items-center gap-3 px-4 py-3 border-2 border-black bg-yellow-300 shadow-[4px_4px_0_0] shadow-black font-bold text-black dark:bg-yellow-500 dark:border-[#282d3c] dark:shadow-[#000000]">
+                class="flex items-center gap-3 px-4 py-3 border-2 border-transparent hover:border-black hover:bg-white hover:shadow-[4px_4px_0_0] hover:shadow-black font-semibold text-gray-700 transition-all dark:text-gray-300 dark:hover:bg-[#1e222d] dark:hover:border-[#282d3c] dark:hover:shadow-[#000000]">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="7" width="18" height="13" rx="2"></rect>
@@ -73,7 +73,7 @@
                 Kelola Portfolio
             </a>
             <a href="faq.html"
-        class="flex items-center gap-3 px-4 py-3 border-2 border-transparent hover:border-black hover:bg-white hover:shadow-[4px_4px_0_0] hover:shadow-black font-semibold text-gray-700 transition-all dark:text-gray-300 dark:hover:bg-[#1e222d] dark:hover:border-[#282d3c] dark:hover:shadow-[#000000]">
+                class="flex items-center gap-3 px-4 py-3 border-2 border-black bg-yellow-300 shadow-[4px_4px_0_0] shadow-black font-bold text-black dark:bg-yellow-500 dark:border-[#282d3c] dark:shadow-[#000000]">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"></circle>
@@ -101,12 +101,12 @@
     <main class="flex-1 p-6 md:p-10 max-w-6xl">
 
         <!-- MODAL TAMBAH / EDIT PORTFOLIO -->
-        <div id="portfolio-modal"
+        <div id="faq-modal"
             class="fixed inset-0 z-50 hidden flex-col items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">
 
             <!-- Kotak Modal -->
-            <div class="neo-modal-content relative w-full group max-w-2xl border-2 border-black bg-white p-6 md:p-8 shadow-[8px_8px_0_0] shadow-black dark:bg-[#14171e] dark:border-[#282d3c] dark:shadow-[#000000] transform scale-95 transition-transform duration-300 overflow-y-auto max-h-[90vh]"
-                id="portfolio-modal-content">
+            <div class="neo-modal-content relative w-full max-w-2xl border-2 border-black bg-white p-6 md:p-8 shadow-[8px_8px_0_0] shadow-black dark:bg-[#14171e] dark:border-[#282d3c] dark:shadow-[#000000] transform scale-95 transition-transform duration-300 overflow-y-auto max-h-[90vh]"
+                id="faq-modal-content">
 
                 <!-- Tombol Tutup (X) -->
                 <button type="button" id="close-modal-btn"
@@ -117,76 +117,37 @@
                     </svg>
                 </button>
 
-                <h2 class="font-display text-2xl font-bold mb-6 dark:text-white" id="modal-title">Tambah Proyek Baru
+                <h2 class="font-display text-2xl font-bold mb-6 dark:text-white" id="modal-title">Tambah FAQ Baru
                 </h2>
 
                 <!-- Form -->
                 <form action="#" method="POST"
-                    onsubmit="event.preventDefault(); window.portfolioModal.close(); alert('Proyek berhasil disimpan (Simulasi)!');">
-
-                    <!-- Upload Gambar -->
-                    <div class="mb-5">
-                        <label class="block font-bold text-sm text-black mb-2 dark:text-white">Thumbnail Proyek</label>
-                        <div class="flex items-center gap-4">
-                            <div
-                                class="w-24 h-24 shrink-0 border-2 border-black bg-gray-100 overflow-hidden shadow-[4px_4px_0_0] shadow-black dark:border-[#282d3c] dark:bg-gray-800 dark:shadow-[#000000]">
-                                <img id="modal-image-preview"
-                                    src="https://placehold.co/300x300/e2e8f0/1e293b?text=Upload" alt="Preview"
-                                    class="w-full h-full object-cover" />
-                            </div>
-                            <div class="relative w-full group">
-                                <input type="file" id="modal-image-upload" accept="image/*"
-                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-                                <div
-                                    class="flex items-center justify-center w-full border-2 border-dashed border-black bg-cyan-100/50 group-hover:bg-cyan-200/50 p-4 text-sm font-bold text-black pointer-events-none dark:border-[#282d3c] dark:bg-[#1e222d] dark:text-gray-300">
-                                    Klik atau seret gambar ke sini
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    onsubmit="event.preventDefault(); window.faqModal.close(); alert('FAQ berhasil disimpan (Simulasi)!');">
 
                     <!-- Input Judul -->
+                    
+                    <!-- Input Pertanyaan -->
                     <div class="mb-5">
-                        <label for="judul_proyek" class="block font-bold text-sm text-black mb-2 dark:text-white">Judul
-                            Proyek</label>
-                        <input type="text" id="judul_proyek" placeholder="Contoh: GosGodinov POS" required
+                        <label for="pertanyaan" class="block font-bold text-sm text-black mb-2 dark:text-white">Pertanyaan</label>
+                        <input type="text" id="pertanyaan" placeholder="Contoh: Sehari butuh berapa gelas kopi kalo lagi ngoding?" required
                             class="w-full border-2 border-black bg-white px-4 py-3 font-medium text-black focus:outline-none focus:ring-0 focus:bg-yellow-50 shadow-[4px_4px_0_0] shadow-black transition-colors dark:bg-[#1e222d] dark:border-[#282d3c] dark:text-white dark:shadow-[#000000] dark:focus:bg-[#2a3040]" />
                     </div>
 
-                    <!-- Input URL -->
-                    <div class="mb-5">
-                        <label for="link_proyek" class="block font-bold text-sm text-black mb-2 dark:text-white">Tautan
-                            Proyek (Opsional)</label>
-                        <input type="url" id="link_proyek" placeholder="https://..."
-                            class="w-full border-2 border-black bg-white px-4 py-3 font-medium text-black focus:outline-none focus:ring-0 focus:bg-yellow-50 shadow-[4px_4px_0_0] shadow-black transition-colors dark:bg-[#1e222d] dark:border-[#282d3c] dark:text-white dark:shadow-[#000000] dark:focus:bg-[#2a3040]" />
-                    </div>
-
-                    <!-- Input Teknologi / Tags -->
-                    <div class="mb-5">
-                        <label for="tags_proyek"
-                            class="block font-bold text-sm text-black mb-2 dark:text-white">Teknologi (Pisahkan dengan
-                            koma)</label>
-                        <input type="text" id="tags_proyek" placeholder="Laravel, Android, Docker" required
-                            class="w-full border-2 border-black bg-white px-4 py-3 font-medium text-black focus:outline-none focus:ring-0 focus:bg-yellow-50 shadow-[4px_4px_0_0] shadow-black transition-colors dark:bg-[#1e222d] dark:border-[#282d3c] dark:text-white dark:shadow-[#000000] dark:focus:bg-[#2a3040]" />
-                    </div>
-
-                    <!-- Input Deskripsi -->
+                    <!-- Input Jawaban -->
                     <div class="mb-8">
-                        <label for="deskripsi_proyek"
-                            class="block font-bold text-sm text-black mb-2 dark:text-white">Deskripsi Singkat</label>
-                        <textarea id="deskripsi_proyek" rows="3" required
+                        <label for="jawaban" class="block font-bold text-sm text-black mb-2 dark:text-white">Jawaban</label>
+                        <textarea id="jawaban" rows="4" placeholder="Contoh: mungkin 4-6 gelas kopi tanpa gula :)" required
                             class="w-full resize-y border-2 border-black bg-white p-4 font-medium text-black leading-relaxed focus:outline-none focus:ring-0 focus:bg-yellow-50 shadow-[4px_4px_0_0] shadow-black transition-colors dark:bg-[#1e222d] dark:border-[#282d3c] dark:text-white dark:shadow-[#000000] dark:focus:bg-[#2a3040]"></textarea>
                     </div>
-
-                    <!-- Tombol Aksi -->
+<!-- Tombol Aksi -->
                     <div class="flex gap-4 border-t-2 border-black border-dashed pt-6 dark:border-[#282d3c]">
-                        <button type="button" onclick="window.portfolioModal.close()"
+                        <button type="button" onclick="window.faqModal.close()"
                             class="flex-1 border-2 border-black bg-gray-200 py-3 font-bold text-black shadow-[4px_4px_0_0] shadow-black hover:-translate-y-1 hover:shadow-[6px_6px_0_0] transition-all dark:bg-gray-700 dark:border-[#282d3c] dark:text-white dark:shadow-[#000000]">
                             Batal
                         </button>
                         <button type="submit"
                             class="flex-1 border-2 border-black bg-green-400 py-3 font-bold text-black shadow-[4px_4px_0_0] shadow-black hover:-translate-y-1 hover:shadow-[6px_6px_0_0] transition-all dark:bg-green-600 dark:border-[#282d3c] dark:text-white dark:shadow-[#000000]">
-                            Simpan Proyek
+                            Simpan FAQ
                         </button>
                     </div>
 
@@ -205,94 +166,61 @@
 
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
             <div>
-                <h1 class="font-display text-3xl font-bold dark:text-white">Kelola Portfolio</h1>
-                <p class="text-black/70 font-medium mt-2 dark:text-gray-400">Tambah, ubah, atau hapus proyek dari
-                    halaman portfolio.</p>
+                <h1 class="font-display text-3xl font-bold dark:text-white">Kelola FAQ</h1>
+                <p class="text-black/70 font-medium mt-2 dark:text-gray-400">Tambah, ubah, atau hapus pertanyaan (QnA / FAQ) yang tampil di halaman beranda.</p>
             </div>
-            <!-- Tombol Tambah Proyek -->
-            <a id="btn-tambah-proyek"
+            <!-- Tombol Tambah FAQ -->
+            <a id="btn-tambah-faq"
                 class="inline-flex items-center gap-2 border-2 border-black bg-cyan-300 px-5 py-3 font-bold text-black shadow-[4px_4px_0_0] shadow-black hover:-translate-y-1 hover:shadow-[6px_6px_0_0] transition-all whitespace-nowrap dark:bg-cyan-600 dark:border-[#282d3c] dark:text-white dark:shadow-[#000000] dark:hover:shadow-[#000000]">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
-                Tambah Proyek
+                Tambah FAQ
             </a>
         </div>
 
-        <!-- Container Daftar Portfolio -->
-        <div id="portfolio-list" class="grid lg:grid-cols-2 gap-8">
-
-            <!-- Item Proyek  -->
-            <article data-item
-                class="border-2 border-black bg-white p-5 flex flex-col shadow-[6px_6px_0_0] shadow-black dark:bg-[#14171e] dark:border-[#282d3c] dark:shadow-[#000000]">
-
-                <div class="flex flex-col sm:flex-row gap-5 h-full">
-                    <!-- Thumbnail -->
-                    <div
-                        class="w-full sm:w-1/3 shrink-0 border-2 border-black bg-gray-100 aspect-video sm:aspect-square overflow-hidden dark:border-[#282d3c] dark:bg-gray-800">
-                        <img src="https://placehold.co/300x300/e2e8f0/1e293b?text=AI" alt="Sentinel Earth"
-                            class="w-full h-full object-cover" />
+        <!-- Container Daftar FAQ -->
+        <div id="faq-list" class="grid lg:grid-cols-2 gap-8 mb-10">
+            <!-- Item FAQ 1 -->
+            <article data-item class="border-2 border-black bg-white p-5 flex flex-col shadow-[6px_6px_0_0] shadow-black dark:bg-[#14171e] dark:border-[#282d3c] dark:shadow-[#000000]">
+                <div class="flex flex-col gap-3 h-full">
+                    <div>
+                        <h2 class="font-display font-bold text-xl leading-tight dark:text-white">Sehari butuh berapa gelas kopi kalo lagi ngoding?</h2>
                     </div>
-
-                    <!-- Info Proyek -->
-                    <div class="flex flex-col grow">
-                        <h2 class="font-display font-bold text-xl leading-tight dark:text-white">Sentinel Earth —
-                            Prediksi Bencana</h2>
-                        <p class="text-sm text-black/70 mt-2 line-clamp-2 dark:text-gray-400">
-                            Proyek Prototipe dengan FastAPI dan CNN untuk klasifikasi infrasound dan risiko bencana.
-                        </p>
-
-                        <!-- Tags -->
-                        <div class="flex flex-wrap gap-2 mt-3 mb-4">
-                            <span
-                                class="border-2 border-black bg-purple-200 px-2 py-0.5 text-xs font-bold text-black dark:border-[#282d3c]">FastAPI</span>
-                            <span
-                                class="border-2 border-black bg-orange-200 px-2 py-0.5 text-xs font-bold text-black dark:border-[#282d3c]">XGBoost</span>
-                        </div>
-
-                        <div class="grow"></div>
-
-                        <!-- Tombol Aksi: Edit & Hapus -->
-                        <div class="flex gap-3 pt-4 border-t-2 border-black border-dashed dark:border-[#282d3c]">
-                            <button title="Edit Proyek"
-                                class="flex-1 border-2 border-black bg-yellow-300 py-2 font-bold text-black text-sm shadow-[2px_2px_0_0] shadow-black hover:-translate-y-[1px] hover:shadow-[3px_3px_0_0] transition-all dark:bg-yellow-600 dark:border-[#282d3c] dark:text-white dark:shadow-[#000000]">
-                                Edit
-                            </button>
-                            <!-- Tombol hapus memiliki atribut data-delete -->
-                            <button data-delete title="Hapus Proyek"
-                                class="flex-1 border-2 border-black bg-red-300 py-2 font-bold text-black text-sm shadow-[2px_2px_0_0] shadow-black hover:-translate-y-[1px] hover:shadow-[3px_3px_0_0] transition-all dark:bg-red-700 dark:border-[#282d3c] dark:text-white dark:shadow-[#000000]">
-                                Hapus
-                            </button>
-                        </div>
+                    <p class="text-sm text-black/70 mt-2 line-clamp-3 dark:text-gray-400">
+                        mungkin 4-6 gelas kopi tanpa gula :)
+                    </p>
+                    <div class="grow"></div>
+                    <!-- Aksi -->
+                    <div class="flex gap-3 mt-4 pt-4 border-t-2 border-black/10 dark:border-white/10">
+                        <button type="button" class="btn-edit text-sm font-bold text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400">Edit</button>
+                        <button type="button" class="btn-delete text-sm font-bold text-red-600 hover:text-red-800 hover:underline dark:text-red-400">Hapus</button>
                     </div>
                 </div>
             </article>
-
         </div>
-
-    </main>
+</main>
 
     <script src="../assets/main.js"></script>
 
-    <!-- Inisialisasi Fungsi Delete Khusus Halaman Ini -->
+    
+    <!-- Inisialisasi Fungsi Khusus Halaman Ini -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            if (typeof initDeleteButtons === 'function') initDeleteButtons('#portfolio-list');
-            if (typeof initImagePreview === 'function') initImagePreview('modal-image-upload', 'modal-image-preview');
+            if (typeof initDeleteButtons === 'function') initDeleteButtons('#faq-list');
 
-            // Inisialisasi Modal Portfolio
-            window.portfolioModal = initModal({
-                modalId: 'portfolio-modal',
+            // Inisialisasi Modal FAQ
+            window.faqModal = initModal({
+                modalId: 'faq-modal',
                 titleId: 'modal-title',
-                addBtnSelector: '#btn-tambah-proyek',
-                editBtnSelector: 'button[title="Edit Proyek"]',
-                addTitle: 'Tambah Proyek Baru',
-                editTitle: 'Edit Data Proyek'
+                addBtnSelector: '#btn-tambah-faq',
+                editBtnSelector: '.btn-edit',
+                addTitle: 'Tambah FAQ Baru',
+                editTitle: 'Edit Data FAQ'
             });
         });
     </script>
 </body>
-
 </html>

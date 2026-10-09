@@ -10,7 +10,6 @@
     │   ├── main.js
     │   └── style.css
     ├── dashboard/
-    ├── experience.html
     ├── index.html       --> entry point
     ├── login.html
     ├── portfolio.html
